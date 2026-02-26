@@ -11,9 +11,6 @@
 
 ## 📸 Screenshots
 
-![Application Architecture](docs/images/architecture-diagram.png)
-<!-- Add your architecture diagram here -->
-
 ![API Documentation](docs/images/scalar-ui.png)
 <!-- Add Scalar UI screenshot here -->
 
