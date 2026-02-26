@@ -1,4 +1,4 @@
-namespace OurCheck.Domain;
+namespace OurCheck.Persistence.Domain;
 
 public class Appointment : EntityBase
 {
@@ -13,4 +13,8 @@ public class Appointment : EntityBase
     public string? Note { get; set;}
 
     public DateTimeOffset AppointmentTime { get; set; }
+    
+    public Guid? SavedPlaceId { get; set; }
+
+    public SavedPlace? SavedPlace { get; set; }
 }

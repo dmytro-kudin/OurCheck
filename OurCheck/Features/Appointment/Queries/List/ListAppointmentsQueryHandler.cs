@@ -12,7 +12,12 @@ public class ListAppointmentsQueryHandler(AppDbContext context) : IRequestHandle
         return await context.Appointments
             .AsNoTracking()
             .OrderBy(x => x.AppointmentTime)
-            .Select(p => new AppointmentDto(p.Id, p.Note, p.AppointmentTime))
+            .Select(appointment => new AppointmentDto(
+                appointment.Id,
+                appointment.Note,
+                appointment.AppointmentTime,
+                appointment.SavedPlace != null ? appointment.SavedPlace.Name : null,
+                appointment.SavedPlace != null ? appointment.SavedPlace.Url : null))
             .ToListAsync(cancellationToken);
     }
 }

@@ -155,18 +155,23 @@ Ensure you have the following installed:
    dotnet restore
    ```
 
-4. **Apply database migrations**
+4. **Add migrations**
+   ```bash
+   dotnet ef migrations add <MigrationName>
+   ```
+
+5. **Apply database migrations**
    ```bash
    dotnet ef database update --project OurCheck
    ```
    > **Note:** The database will be seeded automatically on first run with sample data.
 
-5. **Run the application**
+6. **Run the application**
    ```bash
    dotnet run --project OurCheck
    ```
 
-6. **Access the application**
+7. **Access the application**
    - **HTTPS**: [https://localhost:7198](https://localhost:7198)
    - **HTTP**: [http://localhost:5017](http://localhost:5017)
    - **API Documentation (Scalar)**: [https://localhost:7198/scalar/v1](https://localhost:7198/scalar/v1)

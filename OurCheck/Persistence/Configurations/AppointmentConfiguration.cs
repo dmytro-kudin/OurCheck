@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OurCheck.Domain;
+using OurCheck.Persistence.Domain;
+using OurCheck.Persistence.QueryFilters;
 
 namespace OurCheck.Persistence.Configurations;
 
@@ -10,25 +11,30 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
     {
         builder.ToTable("Appointments");
 
-        builder.HasKey(m => m.Id);
+        builder.HasKey(appointment => appointment.Id);
 
-        builder.Property(m => m.Note)
+        builder.Property(appointment => appointment.Note)
             .HasMaxLength(500);
 
-        builder.Property(m => m.AppointmentTime)
+        builder.Property(appointment => appointment.AppointmentTime)
             .IsRequired();
 
-        builder.Property(m => m.Created)
+        builder.Property(appointment => appointment.Created)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
-        builder.Property(m => m.LastModified)
+        builder.Property(appointment => appointment.LastModified)
             .IsRequired()
             .ValueGeneratedOnUpdate();
-
-        builder.HasIndex(m => m.Id);
-        builder.HasIndex(m => m.AppointmentTime);
         
-        builder.HasQueryFilter(nameof(AppointmentQueryFilter.FutureOnly), m => m.AppointmentTime > DateTimeOffset.UtcNow);
+        builder.HasOne(appointment => appointment.SavedPlace)
+            .WithMany(savedPlace => savedPlace.Appointments)
+            .HasForeignKey(appointment => appointment.SavedPlaceId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasIndex(appointment => appointment.Id);
+        builder.HasIndex(appointment => appointment.AppointmentTime);
+        
+        builder.HasQueryFilter(nameof(AppointmentQueryFilter.FutureOnly), appointment => appointment.AppointmentTime > DateTimeOffset.UtcNow);
     }
 }

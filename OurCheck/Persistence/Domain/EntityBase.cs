@@ -1,4 +1,4 @@
-namespace OurCheck.Domain;
+namespace OurCheck.Persistence.Domain;
 
 public abstract class EntityBase
 {

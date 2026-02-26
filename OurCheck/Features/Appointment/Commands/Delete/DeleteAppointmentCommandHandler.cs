@@ -7,9 +7,9 @@ public class DeleteAppointmentCommandHandler(AppDbContext context) : IRequestHan
 {
     public async Task Handle(DeleteAppointmentCommand request, CancellationToken cancellationToken)
     {
-        var product = await context.Appointments.FindAsync(request.Id, cancellationToken);
-        if (product is null) return;
-        context.Appointments.Remove(product);
+        var appointment = await context.Appointments.FindAsync(request.Id);
+        if (appointment is null) return;
+        context.Appointments.Remove(appointment);
         await context.SaveChangesAsync(cancellationToken);
     }
 }

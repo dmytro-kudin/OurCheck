@@ -1,4 +1,4 @@
-namespace OurCheck.Persistence.Configurations;
+namespace OurCheck.Persistence.QueryFilters;
 
 public enum AppointmentQueryFilter
 {
