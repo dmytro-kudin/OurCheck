@@ -1,4 +1,4 @@
-namespace OurCheck.Application.Common.Constants;
+namespace OurCheck.Infrastructure.Constants;
 
 public static class AppointmentQueryFilters
 {

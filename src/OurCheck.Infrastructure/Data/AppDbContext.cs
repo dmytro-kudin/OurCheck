@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using OurCheck.Application.Common.Interfaces;
 using OurCheck.Domain.Entities;
 
 namespace OurCheck.Infrastructure.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Appointment> Appointments => Set<Appointment>();
     public DbSet<SavedPlace> SavedPlaces => Set<SavedPlace>();

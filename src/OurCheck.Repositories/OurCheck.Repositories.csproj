@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OurCheck.Application\OurCheck.Application.csproj" />
+      <ProjectReference Include="..\OurCheck.Domain\OurCheck.Domain.csproj" />
+      <ProjectReference Include="..\OurCheck.Infrastructure\OurCheck.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

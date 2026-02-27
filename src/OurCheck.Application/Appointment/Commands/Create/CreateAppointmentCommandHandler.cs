@@ -1,22 +1,23 @@
 using MediatR;
-using OurCheck.Application.Common.Interfaces;
+using OurCheck.Application.Repositories;
 
 namespace OurCheck.Application.Appointment.Commands.Create;
 
-public class CreateAppointmentCommandHandler(IAppDbContext context) : IRequestHandler<CreateAppointmentCommand, Guid>
+public class CreateAppointmentCommandHandler(
+    IAppointmentRepository appointmentRepository,
+    ISavedPlaceRepository savedPlaceRepository) : IRequestHandler<CreateAppointmentCommand, Guid>
 {
     public async Task<Guid> Handle(CreateAppointmentCommand command, CancellationToken cancellationToken)
     {
         if (command.SavedPlaceId != null)
         {
-            var savedPlace = await context.SavedPlaces.FindAsync(command.SavedPlaceId);
+            var savedPlace = await savedPlaceRepository.GetByIdAsync(command.SavedPlaceId.Value);
             if (savedPlace is null)
                 throw new ArgumentNullException($"Invalid SavedPlace Id.");
         }
         
         var appointment = new Domain.Entities.Appointment(command.Note, command.AppointmentTime, command.SavedPlaceId);
-        await context.Appointments.AddAsync(appointment, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        await appointmentRepository.AddAsync(appointment);
         return appointment.Id;
     }
 }

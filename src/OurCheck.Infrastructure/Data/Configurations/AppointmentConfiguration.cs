@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OurCheck.Application.Common.Constants;
 using OurCheck.Domain.Entities;
+using OurCheck.Infrastructure.Constants;
 
 namespace OurCheck.Infrastructure.Data.Configurations;
 

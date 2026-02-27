@@ -2,6 +2,7 @@ using OurCheck.API;
 using OurCheck.Application;
 using OurCheck.Infrastructure;
 using OurCheck.Infrastructure.Data;
+using OurCheck.Repositories;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -15,6 +16,7 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
 
 builder.AddApplicationServices();
 builder.AddInfrastructureServices();
+builder.AddRepositories();
 builder.AddApiServices();
 
 var app = builder.Build();

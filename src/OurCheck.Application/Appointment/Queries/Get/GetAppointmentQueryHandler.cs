@@ -1,20 +1,15 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using OurCheck.Application.Appointment.Dtos;
-using OurCheck.Application.Common.Constants;
-using OurCheck.Application.Common.Interfaces;
+using OurCheck.Application.Repositories;
 
 namespace OurCheck.Application.Appointment.Queries.Get;
 
-public class GetAppointmentQueryHandler(IAppDbContext context)
+public class GetAppointmentQueryHandler(IAppointmentRepository appointmentRepository)
     : IRequestHandler<GetAppointmentQuery, AppointmentDto?>
 {
     public async Task<AppointmentDto?> Handle(GetAppointmentQuery request, CancellationToken cancellationToken)
     {
-        var appointment = await context.Appointments
-            .IgnoreQueryFilters([AppointmentQueryFilters.FutureOnly])
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+        var appointment = await appointmentRepository.GetByIdAsync(request.Id);
         if (appointment is null) return null;
         return new AppointmentDto(
             appointment.Id,

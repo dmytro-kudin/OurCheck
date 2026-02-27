@@ -1,17 +1,17 @@
 using MediatR;
-using OurCheck.Application.Common.Interfaces;
+using OurCheck.Application.Repositories;
 
 namespace OurCheck.Application.SavedPlace.Commands.Update;
 
-public class UpdateSavedPlaceCommandHandler(IAppDbContext context) : IRequestHandler<UpdateSavedPlaceCommand>
+public class UpdateSavedPlaceCommandHandler(ISavedPlaceRepository savedPlaceRepository) : IRequestHandler<UpdateSavedPlaceCommand>
 {
     public async Task Handle(UpdateSavedPlaceCommand command, CancellationToken cancellationToken)
     {
-        var savedPlace = await context.SavedPlaces.FindAsync(command.Id);
+        var savedPlace = await savedPlaceRepository.GetByIdAsync(command.Id);
         if (savedPlace is null)
             throw new ArgumentNullException($"Invalid SavedPlace Id.");
         savedPlace.Name = command.Name;
         savedPlace.Url = command.Url;
-        await context.SaveChangesAsync(cancellationToken);
+        await savedPlaceRepository.UpdateAsync(savedPlace);
     }
 }

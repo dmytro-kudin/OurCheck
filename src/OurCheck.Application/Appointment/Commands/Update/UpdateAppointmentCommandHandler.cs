@@ -1,13 +1,15 @@
 using MediatR;
-using OurCheck.Application.Common.Interfaces;
+using OurCheck.Application.Repositories;
 
 namespace OurCheck.Application.Appointment.Commands.Update;
 
-public class UpdateAppointmentCommandHandler(IAppDbContext context) : IRequestHandler<UpdateAppointmentCommand>
+public class UpdateAppointmentCommandHandler(
+    IAppointmentRepository appointmentRepository,
+    ISavedPlaceRepository savedPlaceRepository) : IRequestHandler<UpdateAppointmentCommand>
 {
     public async Task Handle(UpdateAppointmentCommand command, CancellationToken cancellationToken)
     {
-        var appointment = await context.Appointments.FindAsync(command.Id);
+        var appointment = await appointmentRepository.GetByIdAsync(command.Id);
         if (appointment is null)
             throw new ArgumentNullException($"Invalid Appointment Id.");
         appointment.Note = command.Note;
@@ -15,12 +17,12 @@ public class UpdateAppointmentCommandHandler(IAppDbContext context) : IRequestHa
 
         if (command.SavedPlaceId != null)
         {
-            var savedPlace = await context.SavedPlaces.FindAsync(command.SavedPlaceId);
+            var savedPlace = await savedPlaceRepository.GetByIdAsync(command.SavedPlaceId.Value);
             if (savedPlace is null)
                 throw new ArgumentNullException($"Invalid SavedPlace Id.");
         }
         
         appointment.SavedPlaceId = command.SavedPlaceId;
-        await context.SaveChangesAsync(cancellationToken);
+        await appointmentRepository.UpdateAsync(appointment);
     }
 }
