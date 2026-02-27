@@ -3,7 +3,7 @@ using OurCheck.Application.Repositories;
 using OurCheck.Domain.Entities;
 using OurCheck.Infrastructure.Data;
 
-namespace OurCheck.Repositories;
+namespace OurCheck.Persistence;
 
 public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
 {

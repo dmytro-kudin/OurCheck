@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Application", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Infrastructure", "src\OurCheck.Infrastructure\OurCheck.Infrastructure.csproj", "{0614B441-0A3C-4948-A633-E3BBB9014B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Repositories", "src\OurCheck.Repositories\OurCheck.Repositories.csproj", "{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Persistence", "src\OurCheck.Persistence\OurCheck.Persistence.csproj", "{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

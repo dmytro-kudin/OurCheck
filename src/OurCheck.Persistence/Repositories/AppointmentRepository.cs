@@ -4,7 +4,7 @@ using OurCheck.Domain.Entities;
 using OurCheck.Infrastructure.Constants;
 using OurCheck.Infrastructure.Data;
 
-namespace OurCheck.Repositories;
+namespace OurCheck.Persistence;
 
 public class AppointmentRepository : RepositoryBase<Appointment>, IAppointmentRepository
 {

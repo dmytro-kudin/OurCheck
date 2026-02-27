@@ -2,7 +2,7 @@ using OurCheck.API;
 using OurCheck.Application;
 using OurCheck.Infrastructure;
 using OurCheck.Infrastructure.Data;
-using OurCheck.Repositories;
+using OurCheck.Persistence;
 using Scalar.AspNetCore;
 using Serilog;
 
