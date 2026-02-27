@@ -1,11 +1,11 @@
 using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OurCheck.API.Features.SavedPlace.Commands.Create;
-using OurCheck.API.Features.SavedPlace.Commands.Delete;
-using OurCheck.API.Features.SavedPlace.Commands.Update;
-using OurCheck.API.Features.SavedPlace.Queries.Get;
-using OurCheck.API.Features.SavedPlace.Queries.List;
+using OurCheck.Application.SavedPlace.Commands.Create;
+using OurCheck.Application.SavedPlace.Commands.Delete;
+using OurCheck.Application.SavedPlace.Commands.Update;
+using OurCheck.Application.SavedPlace.Queries.Get;
+using OurCheck.Application.SavedPlace.Queries.List;
 
 namespace OurCheck.API.Controllers;
 

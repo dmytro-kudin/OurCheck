@@ -1,11 +1,11 @@
 using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OurCheck.API.Features.Appointment.Commands.Create;
-using OurCheck.API.Features.Appointment.Commands.Delete;
-using OurCheck.API.Features.Appointment.Commands.Update;
-using OurCheck.API.Features.Appointment.Queries.Get;
-using OurCheck.API.Features.Appointment.Queries.List;
+using OurCheck.Application.Appointment.Commands.Create;
+using OurCheck.Application.Appointment.Commands.Delete;
+using OurCheck.Application.Appointment.Commands.Update;
+using OurCheck.Application.Appointment.Queries.Get;
+using OurCheck.Application.Appointment.Queries.List;
 
 namespace OurCheck.API.Controllers;
 
