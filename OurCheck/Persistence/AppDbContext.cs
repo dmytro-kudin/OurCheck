@@ -12,6 +12,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         modelBuilder.HasDefaultSchema("app");
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        modelBuilder.Entity<Appointment>()
+            .Navigation(o => o.SavedPlace)
+            .AutoInclude();
         base.OnModelCreating(modelBuilder);
     }
 
@@ -44,7 +47,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     private static List<Appointment> GetSeedAppointments() =>
     [
-        new Appointment("Logoped", new DateTimeOffset(2026, 3, 1, 0, 0, 0, TimeSpan.Zero)),
+        new Appointment("Logoped", new DateTimeOffset(2026, 3, 1, 0, 0, 0, TimeSpan.Zero), null),
     ];
 
     private static List<SavedPlace> GetSeedSavedPlaces() =>

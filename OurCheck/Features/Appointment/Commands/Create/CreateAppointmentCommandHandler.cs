@@ -7,7 +7,14 @@ public class CreateAppointmentCommandHandler(AppDbContext context) : IRequestHan
 {
     public async Task<Guid> Handle(CreateAppointmentCommand command, CancellationToken cancellationToken)
     {
-        var appointment = new Persistence.Domain.Appointment(command.Note, command.AppointmentTime);
+        if (command.SavedPlaceId != null)
+        {
+            var savedPlace = await context.SavedPlaces.FindAsync(command.SavedPlaceId);
+            if (savedPlace is null)
+                throw new ArgumentNullException($"Invalid SavedPlace Id.");
+        }
+        
+        var appointment = new Persistence.Domain.Appointment(command.Note, command.AppointmentTime, command.SavedPlaceId);
         await context.Appointments.AddAsync(appointment, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
         return appointment.Id;

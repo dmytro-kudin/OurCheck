@@ -2,12 +2,15 @@ namespace OurCheck.Persistence.Domain;
 
 public class Appointment : EntityBase
 {
-    public Appointment() {}
+    public Appointment()
+    {
+    }
 
-    public Appointment(string? note, DateTimeOffset appointmentTime)
+    public Appointment(string? note, DateTimeOffset appointmentTime, Guid? savedPlaceId)
     {
         Note = note;
         AppointmentTime = appointmentTime;
+        SavedPlaceId = savedPlaceId;
     }
     
     public string? Note { get; set;}
