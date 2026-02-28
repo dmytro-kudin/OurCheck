@@ -1,7 +1,7 @@
 using MediatR;
 using OurCheck.Application.Common.Constants;
 using OurCheck.Application.Services.Cache;
-using OurCheck.Application.Services.Repositories;
+using OurCheck.Persistence.Abstract.Repositories;
 
 namespace OurCheck.Application.SavedPlace.Commands.Delete;
 

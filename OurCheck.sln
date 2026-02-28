@@ -16,7 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Application", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Infrastructure", "src\OurCheck.Infrastructure\OurCheck.Infrastructure.csproj", "{0614B441-0A3C-4948-A633-E3BBB9014B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Persistence", "src\OurCheck.Persistence\OurCheck.Persistence.csproj", "{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Persistence.EF", "src\OurCheck.Persistence.EF\OurCheck.Persistence.EF.csproj", "{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurCheck.Persistence.Abstract", "src\OurCheck.Persistence.Abstract\OurCheck.Persistence.Abstract.csproj", "{D9EFFCBD-7F5F-4E9E-9CDF-96241F17FD41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2F36EF4-FE1D-4800-9C36-BB5B118F4305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9EFFCBD-7F5F-4E9E-9CDF-96241F17FD41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9EFFCBD-7F5F-4E9E-9CDF-96241F17FD41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9EFFCBD-7F5F-4E9E-9CDF-96241F17FD41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9EFFCBD-7F5F-4E9E-9CDF-96241F17FD41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{520BB01E-D420-408E-8721-CF93C005F072} = {A2F505E6-12E7-485D-A31E-66198EF1DDE2}
@@ -51,5 +57,6 @@ Global
 		{DACF8475-1DD7-4D61-A31F-BF361287EB41} = {A2F505E6-12E7-485D-A31E-66198EF1DDE2}
 		{0614B441-0A3C-4948-A633-E3BBB9014B82} = {A2F505E6-12E7-485D-A31E-66198EF1DDE2}
 		{A2F36EF4-FE1D-4800-9C36-BB5B118F4305} = {A2F505E6-12E7-485D-A31E-66198EF1DDE2}
+		{D9EFFCBD-7F5F-4E9E-9CDF-96241F17FD41} = {A2F505E6-12E7-485D-A31E-66198EF1DDE2}
 	EndGlobalSection
 EndGlobal

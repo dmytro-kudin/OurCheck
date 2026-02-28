@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OurCheck.Domain\OurCheck.Domain.csproj" />
+      <ProjectReference Include="..\OurCheck.Persistence.Abstract\OurCheck.Persistence.Abstract.csproj" />
     </ItemGroup>
     
     <ItemGroup>

@@ -1,6 +1,6 @@
 using OurCheck.Domain.Entities;
 
-namespace OurCheck.Application.Services.Repositories;
+namespace OurCheck.Persistence.Abstract.Repositories;
 
 public interface IRepositoryBase<T> where T : EntityBase
 {

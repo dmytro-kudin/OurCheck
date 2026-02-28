@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OurCheck.Domain.Entities;
 
-namespace OurCheck.Infrastructure.Data;
+namespace OurCheck.Persistence.EF.Db;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

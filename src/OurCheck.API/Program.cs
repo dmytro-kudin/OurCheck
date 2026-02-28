@@ -1,8 +1,8 @@
 using OurCheck.API;
 using OurCheck.Application;
 using OurCheck.Infrastructure;
-using OurCheck.Infrastructure.Data;
-using OurCheck.Persistence;
+using OurCheck.Persistence.EF;
+using OurCheck.Persistence.EF.Db;
 using Scalar.AspNetCore;
 using Serilog;
 

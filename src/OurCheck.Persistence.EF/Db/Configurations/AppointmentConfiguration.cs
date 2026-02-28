@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OurCheck.Domain.Entities;
 using OurCheck.Infrastructure.Constants;
 
-namespace OurCheck.Infrastructure.Data.Configurations;
+namespace OurCheck.Persistence.EF.Db.Configurations;
 
 public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
 {

@@ -1,4 +1,4 @@
-namespace OurCheck.Application.Services.Repositories;
+namespace OurCheck.Persistence.Abstract.Repositories;
 
 public interface IAppointmentRepository : IRepositoryBase<Domain.Entities.Appointment>
 {

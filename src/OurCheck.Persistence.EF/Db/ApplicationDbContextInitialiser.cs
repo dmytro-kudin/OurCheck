@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace OurCheck.Infrastructure.Data;
+namespace OurCheck.Persistence.EF.Db;
 
 public static class ApplicationDbContextInitialiser
 {
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
+    public static async Task InitialiseDatabaseAsync(this IHost app)
     {
         await using var serviceScope = app.Services.CreateAsyncScope();
         await using var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();

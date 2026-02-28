@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OurCheck.Domain.Entities;
 
-namespace OurCheck.Infrastructure.Data.Configurations;
+namespace OurCheck.Persistence.EF.Db.Configurations;
 
 public class SavedPlaceConfiguration : IEntityTypeConfiguration<SavedPlace>
 {

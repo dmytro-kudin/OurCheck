@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OurCheck.Application.Services.Repositories;
-using OurCheck.Infrastructure.Data;
+using OurCheck.Persistence.Abstract.Repositories;
+using OurCheck.Persistence.EF.Db;
+using OurCheck.Persistence.EF.Repositories;
 
-namespace OurCheck.Persistence;
+namespace OurCheck.Persistence.EF;
 
 public static class DependencyInjection
 {

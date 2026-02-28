@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using OurCheck.Application.Services.Repositories;
 using OurCheck.Domain.Entities;
 using OurCheck.Infrastructure.Constants;
-using OurCheck.Infrastructure.Data;
+using OurCheck.Persistence.Abstract.Repositories;
+using OurCheck.Persistence.EF.Db;
 
-namespace OurCheck.Persistence;
+namespace OurCheck.Persistence.EF.Repositories;
 
 public class AppointmentRepository : RepositoryBase<Appointment>, IAppointmentRepository
 {

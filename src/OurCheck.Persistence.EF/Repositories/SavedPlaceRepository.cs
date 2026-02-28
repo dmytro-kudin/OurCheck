@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using OurCheck.Application.Services.Repositories;
 using OurCheck.Domain.Entities;
-using OurCheck.Infrastructure.Data;
+using OurCheck.Persistence.Abstract.Repositories;
+using OurCheck.Persistence.EF.Db;
 
-namespace OurCheck.Persistence;
+namespace OurCheck.Persistence.EF.Repositories;
 
 public class SavedPlaceRepository : RepositoryBase<SavedPlace>, ISavedPlaceRepository
 {
