@@ -1,11 +1,14 @@
 using MediatR;
-using OurCheck.Application.Repositories;
+using OurCheck.Application.Common.Constants;
+using OurCheck.Application.Services.Cache;
+using OurCheck.Application.Services.Repositories;
 
 namespace OurCheck.Application.Appointment.Commands.Create;
 
 public class CreateAppointmentCommandHandler(
     IAppointmentRepository appointmentRepository,
-    ISavedPlaceRepository savedPlaceRepository) : IRequestHandler<CreateAppointmentCommand, Guid>
+    ISavedPlaceRepository savedPlaceRepository,
+    ICache cache) : IRequestHandler<CreateAppointmentCommand, Guid>
 {
     public async Task<Guid> Handle(CreateAppointmentCommand command, CancellationToken cancellationToken)
     {
@@ -18,6 +21,8 @@ public class CreateAppointmentCommandHandler(
         
         var appointment = new Domain.Entities.Appointment(command.Note, command.AppointmentTime, command.SavedPlaceId);
         await appointmentRepository.AddAsync(appointment);
+        await cache.RemoveAsync(CacheKeys.Appointments);
+        
         return appointment.Id;
     }
 }

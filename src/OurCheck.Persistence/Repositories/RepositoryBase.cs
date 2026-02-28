@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using OurCheck.Application.Repositories;
+using OurCheck.Application.Services.Repositories;
 using OurCheck.Domain.Entities;
 using OurCheck.Infrastructure.Data;
 

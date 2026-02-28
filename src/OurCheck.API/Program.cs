@@ -16,7 +16,7 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
 
 builder.AddApplicationServices();
 builder.AddInfrastructureServices();
-builder.AddRepositories();
+builder.AddPersistenceServices();
 builder.AddApiServices();
 
 var app = builder.Build();

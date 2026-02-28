@@ -2,14 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OurCheck.Application.Repositories;
+using OurCheck.Application.Services.Repositories;
 using OurCheck.Infrastructure.Data;
 
 namespace OurCheck.Persistence;
 
 public static class DependencyInjection
 {
-    public static void AddRepositories(this IHostApplicationBuilder builder)
+    public static void AddPersistenceServices(this IHostApplicationBuilder builder)
     {
         builder.Services.AddDbContext<AppDbContext>(options =>
         {
