@@ -1,6 +1,5 @@
 using MediatR;
-using OurCheck.Application.Common.Constants;
-using OurCheck.Application.Services.Cache;
+using OurCheck.Application.Appointment.Notifications;
 using OurCheck.Persistence.Abstract.Repositories;
 
 namespace OurCheck.Application.Appointment.Commands.Create;
@@ -8,7 +7,7 @@ namespace OurCheck.Application.Appointment.Commands.Create;
 public class CreateAppointmentCommandHandler(
     IAppointmentRepository appointmentRepository,
     ISavedPlaceRepository savedPlaceRepository,
-    ICache cache) : IRequestHandler<CreateAppointmentCommand, Guid>
+    IMediator mediatr) : IRequestHandler<CreateAppointmentCommand, Guid>
 {
     public async Task<Guid> Handle(CreateAppointmentCommand command, CancellationToken cancellationToken)
     {
@@ -21,7 +20,7 @@ public class CreateAppointmentCommandHandler(
         
         var appointment = new Domain.Entities.Appointment(command.Note, command.AppointmentTime, command.SavedPlaceId);
         await appointmentRepository.AddAsync(appointment);
-        await cache.RemoveAsync(CacheKeys.Appointments);
+        await mediatr.Publish(new AppointmentUpdatedNotification(), cancellationToken);
         
         return appointment.Id;
     }

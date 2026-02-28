@@ -18,12 +18,15 @@ public static class DependencyInjection
             cfg.AddOpenBehavior(typeof(RequestResponseLoggingBehavior<,>));
             cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
-        builder.Services.AddMemoryCache();
         builder.AddCache();
     }
 
     private static void AddCache(this IHostApplicationBuilder builder)
     {
+        builder.Services.AddMemoryCache(setup =>
+        {
+            setup.SizeLimit = 10000;
+        });
         builder.Services.AddTransient<ICache, MemoryCache>();
     }
 }

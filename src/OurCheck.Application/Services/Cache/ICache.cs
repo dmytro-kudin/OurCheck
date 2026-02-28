@@ -9,4 +9,6 @@ public interface ICache
     Task<bool> TryGetValueAsync<T>(string key, out T? value);
     
     Task RemoveAsync(string key);
+    
+    Task ClearAsync();
 }

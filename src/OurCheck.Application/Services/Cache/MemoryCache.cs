@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 
 namespace OurCheck.Application.Services.Cache;
 
@@ -47,7 +48,18 @@ public class MemoryCache(
         
         return Task.CompletedTask;
     }
-    
+
+    public Task ClearAsync()
+    {
+        if (cache is Microsoft.Extensions.Caching.Memory.MemoryCache memoryCache)
+        {
+            logger.LogInformation("clearing cache.");
+            memoryCache.Clear();
+        }
+        
+        return Task.CompletedTask;
+    }
+
     private Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions cacheOptions)
     {
         logger.LogInformation("setting data for key: {CacheKey} to cache.", key);

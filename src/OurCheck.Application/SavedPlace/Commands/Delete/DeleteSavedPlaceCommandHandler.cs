@@ -1,18 +1,16 @@
 using MediatR;
-using OurCheck.Application.Common.Constants;
-using OurCheck.Application.Services.Cache;
+using OurCheck.Application.SavedPlace.Notifications;
 using OurCheck.Persistence.Abstract.Repositories;
 
 namespace OurCheck.Application.SavedPlace.Commands.Delete;
 
 public class DeleteSavedPlaceCommandHandler(
     ISavedPlaceRepository savedPlaceRepository,
-    ICache cache) : IRequestHandler<DeleteSavedPlaceCommand>
+    IMediator mediatr) : IRequestHandler<DeleteSavedPlaceCommand>
 {
-    public async Task Handle(DeleteSavedPlaceCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteSavedPlaceCommand command, CancellationToken cancellationToken)
     {
-        await savedPlaceRepository.DeleteAsync(request.Id);
-        await cache.RemoveAsync(CacheKeys.SavedPlaces);
-        await cache.RemoveAsync(string.Format(CacheKeys.SavedPlaceId, request.Id));
+        await savedPlaceRepository.DeleteAsync(command.Id);
+        await mediatr.Publish(new SavedPlaceUpdatedNotification(command.Id), cancellationToken);
     }
 }
