@@ -11,4 +11,12 @@ public interface ICache
     Task RemoveAsync(string key);
     
     Task ClearAsync();
+
+    Task RemoveByTagAsync(string tag);
+    
+    ValueTask<T?> GetOrCreateAsync<T>(
+        string key,
+        Func<CancellationToken, ValueTask<T?>> factory,
+        IEnumerable<string>? tags = null,
+        CancellationToken cancellationToken = default);
 }

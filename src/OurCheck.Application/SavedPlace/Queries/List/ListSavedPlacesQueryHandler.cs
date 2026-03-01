@@ -12,16 +12,16 @@ public class ListSavedPlacesQueryHandler(
 {
     public async Task<List<SavedPlaceDto>> Handle(ListSavedPlacesQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = CacheKeys.SavedPlaces;
-        if (!await cache.TryGetValueAsync(cacheKey, out List<SavedPlaceDto>? savedPlaceDtos))
-        {
-            savedPlaceDtos = (await savedPlaceRepository.GetAllAsync())
-            .Select(savedPlace => new SavedPlaceDto(savedPlace.Id, savedPlace.Name, savedPlace.Url))
-            .ToList();
-            
-            await cache.SetListAsync(cacheKey, savedPlaceDtos);
-        }
-
-        return savedPlaceDtos!;
+        return await cache.GetOrCreateAsync(
+                   CacheKeys.SavedPlaces,
+                   async cancel =>
+                   {
+                       return (await savedPlaceRepository.GetAllAsync())
+                           .Select(savedPlace => new SavedPlaceDto(savedPlace.Id, savedPlace.Name, savedPlace.Url))
+                           .ToList();
+                   },
+                   tags: [CacheKeys.SavedPlaces],
+                   cancellationToken)
+               ?? [];
     }
 }

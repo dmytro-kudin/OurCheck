@@ -13,22 +13,21 @@ public class GetAppointmentQueryHandler(
 {
     public async Task<AppointmentDto?> Handle(GetAppointmentQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = string.Format(CacheKeys.AppointmentId, request.Id);
-        if (!await cache.TryGetValueAsync(cacheKey, out AppointmentDto? appointmentDto))
-        {
-            var appointment = await appointmentRepository.GetByIdAsync(request.Id);
-            if (appointment is null) return null;
-            
-            appointmentDto = new AppointmentDto(
-                appointment.Id,
-                appointment.Note,
-                appointment.AppointmentTime,
-                appointment.SavedPlace?.Name,
-                appointment.SavedPlace?.Url);
-            
-            await cache.SetSingleAsync(cacheKey, appointmentDto);
-        }
+        return await cache.GetOrCreateAsync(
+            string.Format(CacheKeys.AppointmentId, request.Id),
+            async cancel =>
+            {
+                var appointment = await appointmentRepository.GetByIdAsync(request.Id);
+                if (appointment is null) return null;
 
-        return appointmentDto;
+                return new AppointmentDto(
+                    appointment.Id,
+                    appointment.Note,
+                    appointment.AppointmentTime,
+                    appointment.SavedPlace?.Name,
+                    appointment.SavedPlace?.Url);
+            },
+            tags: [CacheKeys.Appointments],
+            cancellationToken);
     }
 }

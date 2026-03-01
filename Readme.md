@@ -359,7 +359,6 @@ dotnet ef migrations script --project src/OurCheck.Infrastructure --startup-proj
 - [ ] Implement authentication & authorization (JWT/OAuth)
 - [ ] Add pagination, filtering, and sorting for list endpoints
 - [ ] Implement soft delete functionality
-- [ ] Add caching layer (Redis/Memory Cache)
 - [ ] Set up CI/CD pipeline (GitHub Actions/Azure DevOps)
 - [ ] Add health check endpoints
 - [ ] Implement rate limiting and throttling

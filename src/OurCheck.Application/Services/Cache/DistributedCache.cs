@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -49,5 +50,31 @@ public class DistributedCache(
         var connectionString = configuration.GetConnectionString("RedisConnection");
         await using var connection = await ConnectionMultiplexer.ConnectAsync($"{connectionString},allowAdmin=true");
         await connection.GetServer($"{connectionString}:6379").FlushDatabaseAsync();
+    }
+
+    public Task RemoveByTagAsync(string tag)
+    {
+        return ClearAsync();
+    }
+
+    public async ValueTask<T?> GetOrCreateAsync<T>(
+        string key,
+        Func<CancellationToken, ValueTask<T?>> factory,
+        IEnumerable<string>? tags = null,
+        CancellationToken cancellationToken = default)
+    {
+        if (await TryGetValueAsync(key, out T? cachedValue))
+            return cachedValue;
+
+        var newValue = await factory(cancellationToken);
+        if (newValue is null)
+            return default;
+
+        if (newValue is IList)
+            await SetListAsync(key, newValue);
+        else
+            await SetSingleAsync(key, newValue);
+
+        return newValue;
     }
 }

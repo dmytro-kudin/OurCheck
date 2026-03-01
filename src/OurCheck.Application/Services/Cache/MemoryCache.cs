@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
@@ -57,6 +58,32 @@ public class MemoryCache(
         }
         
         return Task.CompletedTask;
+    }
+
+    public Task RemoveByTagAsync(string tag)
+    {
+        return ClearAsync();
+    }
+
+    public async ValueTask<T?> GetOrCreateAsync<T>(
+        string key,
+        Func<CancellationToken, ValueTask<T?>> factory,
+        IEnumerable<string>? tags = null,
+        CancellationToken cancellationToken = default)
+    {
+        if (await TryGetValueAsync(key, out T? cachedValue))
+            return cachedValue;
+
+        var newValue = await factory(cancellationToken);
+        if (newValue is null)
+            return default;
+
+        if (newValue is IList)
+            await SetListAsync(key, newValue);
+        else
+            await SetSingleAsync(key, newValue);
+
+        return newValue;
     }
 
     private Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions cacheOptions)
