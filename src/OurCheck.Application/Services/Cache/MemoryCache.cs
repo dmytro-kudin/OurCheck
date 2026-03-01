@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Primitives;
 
 namespace OurCheck.Application.Services.Cache;
 
@@ -29,21 +28,21 @@ public class MemoryCache(
 
     public Task<bool> TryGetValueAsync<T>(string key, out T? value)
     {
-        logger.LogInformation("fetching data for key: {CacheKey} from cache.", key);
+        logger.LogDebug("fetching data for key: {CacheKey} from cache.", key);
         var result = cache.TryGetValue(key, out T? cachedValue);
         value = cachedValue;
 
         if (result)
-            logger.LogInformation("cache hit for key: {CacheKey}.", key);
+            logger.LogDebug("cache hit for key: {CacheKey}.", key);
         else
-            logger.LogInformation("cache miss. fetching data for key: {CacheKey} from database.", key);
+            logger.LogDebug("cache miss. fetching data for key: {CacheKey} from database.", key);
 
         return Task.FromResult(result);
     }
 
     public Task RemoveAsync(string key)
     {
-        logger.LogInformation("invalidating cache for key: {CacheKey} from cache.", key);
+        logger.LogDebug("invalidating cache for key: {CacheKey} from cache.", key);
         cache.Remove(key);
         
         return Task.CompletedTask;
@@ -53,7 +52,7 @@ public class MemoryCache(
     {
         if (cache is Microsoft.Extensions.Caching.Memory.MemoryCache memoryCache)
         {
-            logger.LogInformation("clearing cache.");
+            logger.LogDebug("clearing cache.");
             memoryCache.Clear();
         }
         
@@ -62,7 +61,7 @@ public class MemoryCache(
 
     private Task SetAsync<T>(string key, T value, MemoryCacheEntryOptions cacheOptions)
     {
-        logger.LogInformation("setting data for key: {CacheKey} to cache.", key);
+        logger.LogDebug("setting data for key: {CacheKey} to cache.", key);
         cache.Set(key, value, cacheOptions);
         
         return Task.CompletedTask;

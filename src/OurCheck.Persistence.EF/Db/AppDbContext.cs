@@ -47,7 +47,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     private static List<Appointment> GetSeedAppointments() =>
     [
-        new Appointment("Logoped", new DateTimeOffset(2026, 3, 1, 0, 0, 0, TimeSpan.Zero), null),
+        new Appointment("Logoped", new DateTimeOffset(2026, 5, 1, 0, 0, 0, TimeSpan.Zero), null),
     ];
 
     private static List<SavedPlace> GetSeedSavedPlaces() =>

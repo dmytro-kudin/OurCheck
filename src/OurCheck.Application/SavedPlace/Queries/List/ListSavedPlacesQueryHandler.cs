@@ -12,7 +12,7 @@ public class ListSavedPlacesQueryHandler(
 {
     public async Task<List<SavedPlaceDto>> Handle(ListSavedPlacesQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = CacheKeys.Appointments;
+        var cacheKey = CacheKeys.SavedPlaces;
         if (!await cache.TryGetValueAsync(cacheKey, out List<SavedPlaceDto>? savedPlaceDtos))
         {
             savedPlaceDtos = (await savedPlaceRepository.GetAllAsync())
