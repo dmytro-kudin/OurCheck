@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="compose.yaml" />
+    <File Path="Readme.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/OurCheck.API/OurCheck.API.csproj" />
+    <Project Path="src/OurCheck.Application/OurCheck.Application.csproj" />
+    <Project Path="src/OurCheck.Domain/OurCheck.Domain.csproj" />
+    <Project Path="src/OurCheck.Infrastructure/OurCheck.Infrastructure.csproj" />
+    <Project Path="src/OurCheck.Persistence.Abstract/OurCheck.Persistence.Abstract.csproj" />
+    <Project Path="src/OurCheck.Persistence.EF/OurCheck.Persistence.EF.csproj" />
+  </Folder>
+</Solution>

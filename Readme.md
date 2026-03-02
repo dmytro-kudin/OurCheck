@@ -361,7 +361,6 @@ dotnet ef migrations script --project src/OurCheck.Infrastructure --startup-proj
 - [ ] Set up CI/CD pipeline (GitHub Actions/Azure DevOps)
 - [ ] Add health check endpoints
 - [ ] Implement rate limiting and throttling
-- [ ] Add API request/response compression
 - [ ] Add monitoring and telemetry (Application Insights/OpenTelemetry)
 
 ---
