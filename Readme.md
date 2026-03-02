@@ -357,7 +357,6 @@ dotnet ef migrations script --project src/OurCheck.Infrastructure --startup-proj
 
 - [ ] Add unit and integration test projects (xUnit, FluentAssertions, Testcontainers)
 - [ ] Implement authentication & authorization (JWT/OAuth)
-- [ ] Add pagination, filtering, and sorting for list endpoints
 - [ ] Implement soft delete functionality
 - [ ] Set up CI/CD pipeline (GitHub Actions/Azure DevOps)
 - [ ] Add health check endpoints

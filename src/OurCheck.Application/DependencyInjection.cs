@@ -27,8 +27,10 @@ public static class DependencyInjection
         var cacheProvider = builder.Configuration["CacheProvider"];
         if (cacheProvider == "Redis")
             builder.AddRedis();
-        else
+        else if (cacheProvider == "Memory")
             builder.AddMemoryCache();
+        else
+            builder.AddHybridCache();
     }
 
     private static void AddMemoryCache(this IHostApplicationBuilder builder)
@@ -52,5 +54,20 @@ public static class DependencyInjection
             };
         });
         builder.Services.AddTransient<ICache, DistributedCache>();
+    }
+
+    private static void AddHybridCache(this IHostApplicationBuilder builder)
+    {
+        builder.Services.AddHybridCache();
+        builder.Services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+            options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
+            {
+                AbortOnConnectFail = true,
+                EndPoints = { options.Configuration! }
+            };
+        });
+        builder.Services.AddTransient<ICache, HybridCacheWrapper>();
     }
 }

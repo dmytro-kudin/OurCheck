@@ -8,7 +8,7 @@ public class MemoryCache(
     IMemoryCache cache,
     ILogger<MemoryCache> logger) : ICache
 {
-    public Task SetSingleAsync<T>(string key, T value)
+    public Task SetSingleAsync<T>(string key, T value, IEnumerable<string>? tags = null)
     {
         var cacheOptions = new MemoryCacheEntryOptions()
             .SetSlidingExpiration(TimeSpan.FromSeconds(30))
@@ -17,7 +17,7 @@ public class MemoryCache(
         return SetAsync(key, value, cacheOptions);
     }
 
-    public Task SetListAsync<T>(string key, T value)
+    public Task SetListAsync<T>(string key, T value, IEnumerable<string>? tags = null)
     {
         var cacheOptions = new MemoryCacheEntryOptions()
             .SetSlidingExpiration(TimeSpan.FromSeconds(30))

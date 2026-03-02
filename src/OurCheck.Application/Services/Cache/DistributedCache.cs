@@ -12,13 +12,13 @@ public class DistributedCache(
     ILogger<DistributedCache> logger,
     IConfiguration configuration) : ICache
 {
-    public async Task SetSingleAsync<T>(string key, T value)
+    public async Task SetSingleAsync<T>(string key, T value, IEnumerable<string>? tags = null)
     {
         logger.LogDebug("setting data for key: {CacheKey} to cache.", key);
         await cache.SetAsync(key, value);
     }
 
-    public async Task SetListAsync<T>(string key, T value)
+    public async Task SetListAsync<T>(string key, T value, IEnumerable<string>? tags = null)
     {
         logger.LogDebug("setting data for key: {CacheKey} to cache.", key);
         await cache.SetAsync(key, value);
