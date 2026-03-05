@@ -11,4 +11,8 @@
     <Project Path="src/OurCheck.Persistence.Abstract/OurCheck.Persistence.Abstract.csproj" />
     <Project Path="src/OurCheck.Persistence.EF/OurCheck.Persistence.EF.csproj" />
   </Folder>
+  <Folder Name="/src/Clients/">
+    <Project Path="src/Clients/OurCheck.Client.Application/OurCheck.Client.Application.csproj" />
+    <Project Path="src/Clients/OurCheck.Client.MAUI/OurCheck.Client.MAUI.csproj" />
+  </Folder>
 </Solution>

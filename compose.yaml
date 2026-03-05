@@ -19,7 +19,7 @@
       
   redis:
     image: redis:7-alpine
-    restart: always
+    restart: no
     ports:
       - "6379:6379"
     volumes:
