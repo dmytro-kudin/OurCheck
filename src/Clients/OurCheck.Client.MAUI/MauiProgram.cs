@@ -22,7 +22,8 @@ public static class MauiProgram
 
         builder.Services
             .RegisterConfiguration()
-            .RegisterSerilog();
+            .RegisterSerilog()
+            .RegisterPresentationModels();
             // .AddCoreServices()
             // .RegisterPresentationModels()
             // .RegisterPresentationServices()

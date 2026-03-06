@@ -69,6 +69,7 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
         <PackageReference Include="CommunityToolkit.Maui.Markup" Version="7.0.1" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="MediatR" Version="14.1.0" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
@@ -88,6 +89,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OurCheck.Client.Application\OurCheck.Client.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\Readme.md">
+        <Link>Readme.md</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

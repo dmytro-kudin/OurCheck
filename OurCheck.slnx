@@ -12,6 +12,7 @@
     <Project Path="src/OurCheck.Persistence.EF/OurCheck.Persistence.EF.csproj" />
   </Folder>
   <Folder Name="/src/Clients/">
+    <File Path="src\Clients\Readme.md" />
     <Project Path="src/Clients/OurCheck.Client.Application/OurCheck.Client.Application.csproj" />
     <Project Path="src/Clients/OurCheck.Client.MAUI/OurCheck.Client.MAUI.csproj" />
   </Folder>
