@@ -6,13 +6,15 @@ namespace OurCheck.Client.MAUI;
 
 public static class ConfigureServices
 {
-    private const int NameRemoveCount = 4;
-
     extension(IServiceCollection services)
     {
         public IServiceCollection RegisterPresentationModels()
         {
-            services.AddTransientWithShellRoute<HomePage, HomeViewModel>(nameof(HomePage));
+            services.AddTransient<SplashViewModel>();
+            services.AddTransient<SplashPage>();
+            services.AddTransient<HomeViewModel>();
+            services.AddTransient<HomePage>();
+            // services.AddTransientWithShellRoute<HomePage, HomeViewModel>(nameof(HomePage));
 
             return services;
         }

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace OurCheck.Client.MAUI;
+﻿namespace OurCheck.Client.MAUI;
 
 public partial class App : Microsoft.Maui.Controls.Application
 {

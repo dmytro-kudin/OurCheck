@@ -6,13 +6,13 @@ namespace OurCheck.Client.MAUI.ViewModels.Base;
 public abstract partial class BasePageViewModel : ObservableObject
 {
     [RelayCommand]
-    protected virtual async Task PageAppearing()
+    protected virtual async Task PageAppearingAsync()
     {
         await Task.CompletedTask;
     }
 
     [RelayCommand]
-    protected virtual async Task PageDisappearing()
+    protected virtual async Task PageDisappearingAsync()
     {
         await Task.CompletedTask;
     }

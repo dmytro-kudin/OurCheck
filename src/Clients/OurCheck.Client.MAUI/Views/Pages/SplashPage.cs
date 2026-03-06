@@ -4,14 +4,12 @@ using OurCheck.Client.MAUI.Views.Pages.Base;
 
 namespace OurCheck.Client.MAUI.Views.Pages;
 
-public class HomePage : BaseContentPage<HomeViewModel>
+public class SplashPage : BaseContentPage<SplashViewModel>
 {
-    public HomePage(HomeViewModel viewModel) : base(viewModel)
+    public SplashPage(SplashViewModel viewModel) : base(viewModel)
     {
-    }
-
-    protected override void InitView()
-    {
+        Shell.SetNavBarIsVisible(this, false);
+        
         Content = new VerticalStackLayout
         {
             Spacing = 20,
