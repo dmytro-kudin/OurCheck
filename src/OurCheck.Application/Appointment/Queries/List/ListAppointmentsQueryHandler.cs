@@ -1,7 +1,7 @@
 using MediatR;
-using OurCheck.Application.Appointment.Dtos;
 using OurCheck.Application.Common.Constants;
 using OurCheck.Application.Services.Cache;
+using OurCheck.Dto.Appointment;
 using OurCheck.Persistence.Abstract.Repositories;
 
 namespace OurCheck.Application.Appointment.Queries.List;

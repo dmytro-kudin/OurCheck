@@ -1,5 +1,5 @@
 using MediatR;
-using OurCheck.Application.Appointment.Dtos;
+using OurCheck.Dto.Appointment;
 
 namespace OurCheck.Application.Appointment.Queries.Get;
 

@@ -1,4 +1,4 @@
-namespace OurCheck.Application.Appointment.Dtos;
+namespace OurCheck.Dto.Appointment;
 
 public record AppointmentDto(
     Guid Id,

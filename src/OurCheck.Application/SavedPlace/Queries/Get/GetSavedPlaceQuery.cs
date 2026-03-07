@@ -1,5 +1,5 @@
 using MediatR;
-using OurCheck.Application.SavedPlace.Dtos;
+using OurCheck.Dto.SavedPlace;
 
 namespace OurCheck.Application.SavedPlace.Queries.Get;
 
