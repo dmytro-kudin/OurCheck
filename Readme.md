@@ -92,80 +92,186 @@ This project follows **Clean Architecture** principles organized into a **multi-
 
 ```
 src/
-├── OurCheck.Domain/              # 🟦 Core/Domain Layer
-│   ├── Entities/                 #    - Appointment, SavedPlace, EntityBase
-│   └── README.md                 #    - Zero dependencies (pure domain logic)
+├── Backend (Server-Side)
+│   │
+│   ├── OurCheck.Domain/              # 🟦 Core/Domain Layer
+│   │   ├── Entities/                 #    - Appointment, SavedPlace, EntityBase
+│   │   └── README.md                 #    - Zero dependencies (pure domain logic)
+│   │
+│   ├── OurCheck.Dto/                 # 📦 Shared Contracts Layer
+│   │   ├── Appointment/              #    - AppointmentDto, CreateAppointmentDto
+│   │   ├── SavedPlace/               #    - SavedPlaceDto, CreateSavedPlaceDto
+│   │   ├── Common/                   #    - CreatedDto
+│   │   └── README.md                 #    - Shared between backend & clients
+│   │
+│   ├── OurCheck.Application/         # 🟩 Application/Use Cases Layer
+│   │   ├── Appointment/              #    - CQRS Commands & Queries
+│   │   │   ├── Commands/             #    - Create, Delete, Update handlers
+│   │   │   ├── Queries/              #    - Get, List queries
+│   │   │   └── Dtos/                 #    - Feature-specific DTOs
+│   │   ├── SavedPlace/               #    - SavedPlace feature slice
+│   │   ├── Common/
+│   │   │   ├── Behaviors/            #    - ValidationBehavior, LoggingBehavior
+│   │   │   ├── Interfaces/           #    - IAppDbContext (abstraction)
+│   │   │   └── Constants/
+│   │   ├── DependencyInjection.cs    #    - MediatR + FluentValidation setup
+│   │   └── README.md                 #    - Depends on Domain + Dto
+│   │
+│   ├── OurCheck.Persistence.Abstract/ # 🔷 Persistence Abstractions
+│   │   ├── Repositories/             #    - IRepositoryBase<T>, IAppointmentRepository
+│   │   └── README.md                 #    - Repository interface contracts
+│   │
+│   ├── OurCheck.Persistence.EF/      # 🟨 Persistence Implementation (EF Core)
+│   │   ├── Db/                       #    - AppDbContext, Configurations
+│   │   ├── Repositories/             #    - RepositoryBase<T>, concrete repositories
+│   │   ├── Migrations/               #    - EF Core migration files
+│   │   ├── DependencyInjection.cs    #    - PostgreSQL + EF Core setup
+│   │   └── README.md                 #    - Implements Persistence.Abstract
+│   │
+│   ├── OurCheck.Infrastructure/      # 🟧 Infrastructure (External Services)
+│   │   ├── Data/                     #    - Legacy database code (consider moving)
+│   │   ├── DependencyInjection.cs    #    - External integrations setup
+│   │   └── README.md                 #    - Email, caching, file storage, etc.
+│   │
+│   └── OurCheck.API/                 # 🟥 Presentation/API Layer
+│       ├── Controllers/              #    - AppointmentController, SavedPlaceController
+│       ├── Exceptions/               #    - GlobalExceptionHandler
+│       ├── Program.cs                #    - Application entry point
+│       ├── DependencyInjection.cs    #    - API versioning, Swagger, CORS
+│       └── README.md                 #    - Orchestrates all layers
 │
-├── OurCheck.Application/         # 🟩 Application/Use Cases Layer
-│   ├── Appointment/              #    - CQRS Commands & Queries
-│   │   ├── Commands/             #    - Create, Delete, Update handlers
-│   │   ├── Queries/              #    - Get, List queries
-│   │   └── Dtos/                 #    - Data Transfer Objects
-│   ├── SavedPlace/               #    - SavedPlace feature slice
-│   │   ├── Commands/
-│   │   ├── Queries/
-│   │   └── Dtos/
-│   ├── Common/
-│   │   ├── Behaviors/            #    - ValidationBehavior, LoggingBehavior
-│   │   ├── Interfaces/           #    - IAppDbContext (abstraction)
-│   │   └── Constants/
-│   ├── DependencyInjection.cs    #    - MediatR + FluentValidation setup
-│   └── README.md                 #    - Depends only on Domain
-│
-├── OurCheck.Infrastructure/      # 🟨 Infrastructure/Data Access Layer
-│   ├── Data/
-│   │   ├── AppDbContext.cs       #    - EF Core DbContext (implements IAppDbContext)
-│   │   ├── Configurations/       #    - Entity type configurations
-│   │   └── ApplicationDbContextInitialiser.cs
-│   ├── Migrations/               #    - EF Core migration files
-│   ├── DependencyInjection.cs    #    - PostgreSQL + EF Core setup
-│   └── README.md                 #    - Implements Application abstractions
-│
-└── OurCheck.API/                 # 🟥 Presentation/API Layer
-    ├── Controllers/              #    - AppointmentController, SavedPlaceController
-    │   ├── AppointmentController.cs
-    │   └── SavedPlaceController.cs
-    ├── Exceptions/
-    │   └── GlobalExceptionHandler.cs
-    ├── Features/                 #    - (Future) Minimal API endpoints
-    ├── Program.cs                #    - Application entry point
-    ├── DependencyInjection.cs    #    - API versioning, Swagger, CORS
-    └── README.md                 #    - Orchestrates all layers
+└── Clients/ (Client Applications)
+    │
+    ├── OurCheck.Client.Repository.Abstract/  # 🔷 Client Repository Abstractions
+    │   ├── Repositories/             #    - IRepositoryBase<TDto>, IAppointmentRepository
+    │   └── README.md                 #    - Client data access interface contracts
+    │
+    ├── OurCheck.Client.Repository.API/       # 🌐 HTTP API Client Implementation
+    │   ├── Repositories/             #    - RepositoryBase (HttpClient), AppointmentRepository
+    │   ├── DependencyInjection.cs    #    - HttpClient + typed client setup
+    │   └── README.md                 #    - Implements Client.Repository.Abstract via HTTP
+    │
+    ├── OurCheck.Client.Application/          # 🟢 Client Business Logic
+    │   ├── Services/                 #    - IAppointmentService, AppointmentService
+    │   ├── Exceptions/               #    - Client-specific exceptions
+    │   ├── DependencyInjection.cs    #    - Client services setup
+    │   └── README.md                 #    - Platform-agnostic client logic
+    │
+    └── OurCheck.Client.MAUI/                 # 📱 MAUI Cross-Platform UI
+        ├── Views/                    #    - XAML/C# Markup pages
+        ├── ViewModels/               #    - MVVM ViewModels
+        ├── Setup/                    #    - Configuration helpers
+        ├── MauiProgram.cs            #    - MAUI entry point
+        ├── AppShell.cs               #    - Navigation routing
+        ├── appsettings.json          #    - API URL, logging config
+        └── README.md                 #    - iOS, Android, macOS, Windows UI
 ```
 
 ### Dependency Flow (Clean Architecture)
 
+#### Backend Dependency Graph
+
+```mermaid
+graph TD
+    API[OurCheck.API<br/>Presentation]
+    APP[OurCheck.Application<br/>Use Cases]
+    INFRA[OurCheck.Infrastructure<br/>External Services]
+    EF[OurCheck.Persistence.EF<br/>Database Implementation]
+    PERSIST[OurCheck.Persistence.Abstract<br/>Repository Interfaces]
+    DOMAIN[OurCheck.Domain<br/>Core Entities]
+    DTO[OurCheck.Dto<br/>Contracts]
+
+    API -->|depends on| APP
+    API -->|depends on| INFRA
+    API -->|depends on| EF
+
+    INFRA -->|depends on| APP
+    INFRA -->|depends on| DOMAIN
+
+    EF -->|depends on| PERSIST
+    EF -->|depends on| DOMAIN
+
+    APP -->|depends on| PERSIST
+    APP -->|depends on| DOMAIN
+    APP -->|depends on| DTO
+
+    PERSIST -->|depends on| DOMAIN
+    
+    classDef presentation fill:#fdfdff,stroke:#5c6bc0,stroke-width:2px;
+    classDef application fill:#f1f8e9,stroke:#7cb342,stroke-width:2px;
+    classDef infrastructure fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
+    classDef core fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;
+    
+    class API presentation;
+    class APP application;
+    class INFRA,EF infrastructure;
+    class DOMAIN,DTO,PERSIST core;
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    OurCheck.API                         │
-│              (Presentation Layer)                        │
-│  Controllers, Middleware, Program.cs                     │
-└────────────────────┬────────────────────────────────────┘
-                     │ depends on
-                     ↓
-┌─────────────────────────────────────────────────────────┐
-│              OurCheck.Infrastructure                     │
-│            (Infrastructure Layer)                        │
-│  DbContext, Repositories, External Services              │
-└────────────────────┬────────────────────────────────────┘
-                     │ depends on
-                     ↓
-┌─────────────────────────────────────────────────────────┐
-│              OurCheck.Application                        │
-│            (Application Layer)                           │
-│  Use Cases, Commands, Queries, Interfaces                │
-└────────────────────┬────────────────────────────────────┘
-                     │ depends on
-                     ↓
-┌─────────────────────────────────────────────────────────┐
-│              OurCheck.Domain                             │
-│              (Core/Domain Layer)                         │
-│  Entities, Value Objects, Domain Logic                   │
-│  ⚠️ NO DEPENDENCIES - Pure business logic                │
-└─────────────────────────────────────────────────────────┘
+
+#### Client Dependency Graph
+
+```mermaid
+graph TD
+    MAUI[OurCheck.Client.MAUI<br/>Presentation]
+    CAPP[OurCheck.Client.Application<br/>Business Logic]
+    CREP_API[OurCheck.Client.Repository.API<br/>HTTP Implementation]
+    CREP_ABS[OurCheck.Client.Repository.Abstract<br/>Interfaces]
+    DTO[OurCheck.Dto<br/>Shared Contracts]
+
+    MAUI -->|depends on| CAPP
+    
+    CAPP -->|depends on| CREP_API
+    CAPP -->|depends on| CREP_ABS
+    CAPP -->|depends on| DTO
+    
+    CREP_API -->|depends on| CREP_ABS
+    CREP_ABS -->|depends on| DTO
+
+    classDef presentation fill:#fdfdff,stroke:#5c6bc0,stroke-width:2px;
+    classDef application fill:#f1f8e9,stroke:#7cb342,stroke-width:2px;
+    classDef infrastructure fill:#fff3e0,stroke:#fb8c00,stroke-width:2px;
+    classDef core fill:#e3f2fd,stroke:#1e88e5,stroke-width:2px;
+
+    class MAUI presentation;
+    class CAPP application;
+    class CREP_API infrastructure;
+    class CREP_ABS,DTO core;
 ```
 
 > **📖 Each project contains its own detailed README.md** explaining responsibilities, dependencies, and architectural rules.
+>
+> **🔑 Key Architectural Benefit:** `OurCheck.Dto` enables **contract-first design** and serves as the **integration point** between backend API and client applications.
+
+---
+
+## 📱 Client Applications
+
+The solution includes a **.NET MAUI cross-platform client application** that consumes the backend API, demonstrating a complete end-to-end architecture.
+
+### OurCheck.Client.MAUI
+
+**Multi-platform native app** for iOS, Android, macOS, and Windows using:
+- **MVVM Pattern** with CommunityToolkit.Mvvm
+- **C# Markup** for declarative UI (CommunityToolkit.Maui.Markup)
+- **Clean Architecture** with separation of concerns (Repository, Application, Presentation)
+- **HttpClient-based API communication** via typed repositories
+- **Serilog structured logging** for diagnostics
+- **Dependency Injection** for testability
+
+**Supported Platforms:**
+- iOS 15.0+
+- Android 21+ (Lollipop)
+- macOS Catalyst 15.0+
+- Windows 10.0.17763.0+
+
+**Key Features:**
+- Native UI with platform-specific optimizations
+- AOT compilation and trimming for optimized binaries
+- Shared business logic across all platforms
+- Type-safe API client with DTOs
+- Configuration via `appsettings.json`
+
+See `src/Clients/OurCheck.Client.MAUI/README.md` for detailed setup instructions.
 
 ---
 
@@ -173,7 +279,7 @@ src/
 
 ### Prerequisites
 
-Ensure you have the following installed:
+#### Backend Prerequisites
 
 - **.NET 10 SDK** ([Download](https://dotnet.microsoft.com/download/dotnet/10.0))
 - **Docker Desktop** ([Download](https://www.docker.com/products/docker-desktop))
@@ -182,7 +288,21 @@ Ensure you have the following installed:
   dotnet tool install --global dotnet-ef
   ```
 
+#### Client Prerequisites (for MAUI app)
+
+- **.NET 10 SDK** with MAUI workload
+- **Visual Studio 2022** or **JetBrains Rider** with MAUI support
+- **Xcode** (macOS only, for iOS/macOS development)
+- **Android SDK** (for Android development)
+
+Install MAUI workload:
+```bash
+dotnet workload install maui
+```
+
 ### Setup Instructions
+
+#### Backend Setup
 
 1. **Clone the repository**
    ```bash
@@ -204,26 +324,54 @@ Ensure you have the following installed:
    dotnet restore
    ```
 
-4. **Add migrations**
+4. **Add migrations** (if needed)
    ```bash
-   dotnet ef migrations add <MigrationName> --project src/OurCheck.Infrastructure --startup-project src/OurCheck.API
+   dotnet ef migrations add <MigrationName> --project src/OurCheck.Persistence.EF --startup-project src/OurCheck.API
    ```
 
 5. **Apply database migrations**
    ```bash
-   dotnet ef database update --project src/OurCheck.Infrastructure --startup-project src/OurCheck.API
+   dotnet ef database update --project src/OurCheck.Persistence.EF --startup-project src/OurCheck.API
    ```
    > **Note:** The database will be seeded automatically on first run with sample data.
 
-6. **Run the application**
+6. **Run the backend API**
    ```bash
    dotnet run --project src/OurCheck.API
    ```
 
-7. **Access the application**
+7. **Access the API**
    - **HTTPS**: [https://localhost:7198](https://localhost:7198)
    - **HTTP**: [http://localhost:5017](http://localhost:5017)
    - **API Documentation (Scalar)**: [https://localhost:7198/scalar/v1](https://localhost:7198/scalar/v1)
+
+#### Client Setup (MAUI)
+
+1. **Configure API URL** in `src/Clients/OurCheck.Client.MAUI/appsettings.json`:
+   ```json
+   {
+     "ApiSettings": {
+       "BaseUrl": "https://localhost:7198"
+     }
+   }
+   ```
+
+2. **Run the MAUI app** (choose your target platform):
+   ```bash
+   # Android
+   dotnet build -t:Run -f net10.0-android -p src/Clients/OurCheck.Client.MAUI
+
+   # iOS (macOS only)
+   dotnet build -t:Run -f net10.0-ios -p src/Clients/OurCheck.Client.MAUI
+
+   # Windows
+   dotnet build -t:Run -f net10.0-windows10.0.19041.0 -p src/Clients/OurCheck.Client.MAUI
+
+   # macOS Catalyst
+   dotnet build -t:Run -f net10.0-maccatalyst -p src/Clients/OurCheck.Client.MAUI
+   ```
+
+   Or use Visual Studio/Rider's built-in MAUI debugger.
 
 ---
 

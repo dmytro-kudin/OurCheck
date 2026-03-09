@@ -20,7 +20,9 @@ This project represents the **Presentation Layer**, exposing HTTP endpoints via 
 | Project | Reason |
 |---------|--------|
 | `OurCheck.Application` | Sends commands/queries via MediatR to execute use cases |
-| `OurCheck.Infrastructure` | Registers infrastructure services (DbContext, migrations) |
+| `OurCheck.Infrastructure` | Registers infrastructure services (external integrations) |
+| `OurCheck.Persistence.EF` | Registers persistence services (DbContext, repositories, migrations) |
+| `OurCheck.Dto` | Uses DTOs for request/response contracts |
 
 ### External Dependencies
 | Package | Purpose |

@@ -1,11 +1,12 @@
 using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OurCheck.Application.Appointment.Commands.Create;
-using OurCheck.Application.Appointment.Commands.Delete;
-using OurCheck.Application.Appointment.Commands.Update;
-using OurCheck.Application.Appointment.Queries.Get;
-using OurCheck.Application.Appointment.Queries.List;
+using OurCheck.Application.Features.Appointment.Commands.Create;
+using OurCheck.Application.Features.Appointment.Commands.Delete;
+using OurCheck.Application.Features.Appointment.Commands.Update;
+using OurCheck.Application.Features.Appointment.Queries.Get;
+using OurCheck.Application.Features.Appointment.Queries.List;
+using OurCheck.Dto.Appointment;
 
 namespace OurCheck.API.Controllers;
 
@@ -30,11 +31,12 @@ public class AppointmentController(ISender mediatr) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IResult> CreateAppointment([FromBody] CreateAppointmentCommand command)
+    public async Task<IResult> CreateAppointment([FromBody] CreateAppointmentDto dto)
     {
-        var appointmentId = await mediatr.Send(command);
-        if (Guid.Empty == appointmentId) return Results.BadRequest();
-        return TypedResults.Created($"{Request.Path}/{appointmentId}", new { id = appointmentId });
+        var command = new CreateAppointmentCommand(dto.Note, dto.AppointmentTime, dto.SavedPlaceId);
+        var createdDto = await mediatr.Send(command);
+        if (Guid.Empty == createdDto.Id) return Results.BadRequest();
+        return TypedResults.Created($"{Request.Path}/{createdDto.Id}", createdDto);
     }
 
     [HttpDelete("{id}")]
@@ -45,9 +47,9 @@ public class AppointmentController(ISender mediatr) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IResult> UpdateAppointment([FromRoute] Guid id, [FromBody] CreateAppointmentCommand command)
+    public async Task<IResult> UpdateAppointment([FromRoute] Guid id, [FromBody] CreateAppointmentDto dto)
     {
-        await mediatr.Send(new UpdateAppointmentCommand(id, command.Note, command.AppointmentTime, command.SavedPlaceId));
+        await mediatr.Send(new UpdateAppointmentCommand(id, dto.Note, dto.AppointmentTime, dto.SavedPlaceId));
         return Results.NoContent();
     }
 }

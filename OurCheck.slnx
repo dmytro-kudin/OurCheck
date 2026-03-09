@@ -16,5 +16,7 @@
     <File Path="src\Clients\Readme.md" />
     <Project Path="src/Clients/OurCheck.Client.Application/OurCheck.Client.Application.csproj" />
     <Project Path="src/Clients/OurCheck.Client.MAUI/OurCheck.Client.MAUI.csproj" />
+    <Project Path="src/Clients/OurCheck.Client.Repository.Abstract/OurCheck.Client.Repository.Abstract.csproj" />
+    <Project Path="src/Clients/OurCheck.Client.Repository.API/OurCheck.Client.Repository.API.csproj" />
   </Folder>
 </Solution>

@@ -12,4 +12,18 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\OurCheck.Dto\OurCheck.Dto.csproj" />
+      <ProjectReference Include="..\OurCheck.Client.Repository.Abstract\OurCheck.Client.Repository.Abstract.csproj" />
+      <ProjectReference Include="..\OurCheck.Client.Repository.API\OurCheck.Client.Repository.API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="14.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>

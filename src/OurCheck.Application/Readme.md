@@ -19,6 +19,7 @@ This project represents the **Application Layer**, implementing business use cas
 | Project | Reason |
 |---------|--------|
 | `OurCheck.Domain` | References domain entities and business logic |
+| `OurCheck.Dto` | Uses DTOs for command/query responses and API contracts |
 
 ### External Dependencies
 | Package | Purpose |
@@ -41,8 +42,9 @@ This project represents the **Application Layer**, implementing business use cas
 
 ## Architectural Rules
 
-- ✅ **MUST** depend only on `OurCheck.Domain`
-- ✅ **MUST NOT** reference `OurCheck.Infrastructure` or `OurCheck.API`
+- ✅ **MUST** depend only on `OurCheck.Domain` and `OurCheck.Dto`
+- ✅ **MUST NOT** reference `OurCheck.Infrastructure`, `OurCheck.Persistence.EF`, or `OurCheck.API`
 - ✅ **MUST** define abstractions (interfaces) for infrastructure services (e.g., database access)
 - ✅ **MUST** organize features using **Vertical Slice Architecture** (Commands/Queries/DTOs per feature)
-- ✅ Infrastructure layer implements interfaces defined here (**Inversion of Control**)
+- ✅ **MUST** use DTOs from `OurCheck.Dto` for all external-facing data contracts
+- ✅ Infrastructure/Persistence layers implement interfaces defined here (**Inversion of Control**)

@@ -1,48 +1,57 @@
-# OurCheck.Infrastructure
+# OurCheck.Persistence.EF
 
-**Layer:** Infrastructure/Data Access Layer
+**Layer:** Infrastructure/Persistence Implementation Layer
 
-This project represents the **Infrastructure Layer**, providing concrete implementations of persistence, data access, and external integrations. It implements repository patterns and database context using **Entity Framework Core** with **PostgreSQL**.
+This project provides the **concrete Entity Framework Core implementation** of repository abstractions and database access. It implements the **Repository Pattern** using EF Core with **PostgreSQL**, handling all data persistence concerns for the backend application.
 
 ## Responsibilities
 
-- Implements **Entity Framework Core DbContext** (`AppDbContext`)
-- Provides **database configurations** and entity mappings
-- Manages **EF Core migrations** for schema versioning
-- Implements **IAppDbContext** interface defined in Application layer
-- Configures **PostgreSQL** as the database provider
+- Implements **repository interfaces** defined in `OurCheck.Persistence.Abstract`
+- Provides **Entity Framework Core DbContext** (`AppDbContext`) for database operations
+- Contains **entity type configurations** using Fluent API for precise schema control
+- Manages **EF Core migrations** for database schema versioning
+- Implements **generic repository base class** (`RepositoryBase<T>`) with CRUD operations
 - Handles **database initialization and seeding** logic
+- Configures **PostgreSQL** as the database provider
+- Applies **query filters** (e.g., `AppointmentQueryFilter`) for cross-cutting concerns
 
 ## Dependencies
 
 ### Internal Dependencies
 | Project | Reason |
 |---------|--------|
-| `OurCheck.Domain` | Access to entity definitions for persistence mapping |
-| `OurCheck.Application` | Implements `IAppDbContext` and other application abstractions |
+| `OurCheck.Domain` | Access to domain entities for persistence mapping |
+| `OurCheck.Persistence.Abstract` | Implements repository interface contracts |
 
 ### External Dependencies
 | Package | Purpose |
 |---------|---------|
 | **Npgsql.EntityFrameworkCore.PostgreSQL** (10.0.0) | PostgreSQL database provider for EF Core |
-| **Microsoft.EntityFrameworkCore** (10.0.3) | ORM framework for data access |
-| **Microsoft.EntityFrameworkCore.Design** (10.0.3) | Design-time tools for migrations |
+| **Microsoft.EntityFrameworkCore** (10.0.3) | ORM framework for data access operations |
+| **Microsoft.EntityFrameworkCore.Design** (10.0.3) | Design-time tools for migrations and scaffolding |
 | **Microsoft.Extensions.Hosting.Abstractions** (10.0.3) | Dependency injection abstractions |
 
 ## Key Components
 
 | Component | Description |
 |-----------|-------------|
-| `/Data/AppDbContext.cs` | EF Core DbContext implementing `IAppDbContext` with seeding logic |
-| `/Data/Configurations` | Entity type configurations (Fluent API mappings) |
-| `/Data/ApplicationDbContextInitialiser.cs` | Database initialization and migration logic |
-| `/Migrations` | EF Core migration files for schema evolution |
-| `DependencyInjection.cs` | Service registration extension method (`AddInfrastructureServices`) |
+| `/Db/AppDbContext.cs` | EF Core DbContext with entity configurations and seeding logic |
+| `/Db/Configurations` | Entity type configurations using Fluent API (`AppointmentConfiguration`, etc.) |
+| `/Db/ApplicationDbContextInitialiser.cs` | Database initialization, migration application, and seeding |
+| `/Repositories/RepositoryBase.cs` | Generic repository base class implementing `IRepositoryBase<T>` |
+| `/Repositories/AppointmentRepository.cs` | Appointment-specific repository implementing `IAppointmentRepository` |
+| `/Repositories/SavedPlaceRepository.cs` | SavedPlace-specific repository implementing `ISavedPlaceRepository` |
+| `/Migrations` | EF Core migration files for database schema evolution |
+| `/Constants/AppointmentQueryFilter.cs` | Global query filters for entities |
+| `DependencyInjection.cs` | Service registration (`AddPersistenceServices`) |
 
 ## Architectural Rules
 
-- ✅ **MUST** implement abstractions defined in `OurCheck.Application`
+- ✅ **MUST** implement all interfaces defined in `OurCheck.Persistence.Abstract`
 - ✅ **MUST NOT** be referenced by `OurCheck.Domain` (preserves domain independence)
-- ✅ **SHOULD** encapsulate all persistence and external service concerns
-- ✅ **MUST** use **Repository Pattern** or **DbContext abstraction** to avoid tight coupling
-- ✅ Uses **async/await seeding** for database initialization (`UseAsyncSeeding`)
+- ✅ **MUST** encapsulate all EF Core-specific logic (DbContext, migrations, configurations)
+- ✅ **SHOULD** use **async/await** for all database operations
+- ✅ **SHOULD** use `AsNoTracking()` for read-only queries in repositories
+- ✅ **MUST** apply migrations automatically or via initialization logic
+- ✅ Uses **Repository Pattern** to abstract EF Core from Application layer
+- ✅ Enables **switching ORM technologies** without affecting business logic (via abstraction layer)

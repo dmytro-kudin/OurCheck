@@ -1,11 +1,11 @@
 using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OurCheck.Application.SavedPlace.Commands.Create;
-using OurCheck.Application.SavedPlace.Commands.Delete;
-using OurCheck.Application.SavedPlace.Commands.Update;
-using OurCheck.Application.SavedPlace.Queries.Get;
-using OurCheck.Application.SavedPlace.Queries.List;
+using OurCheck.Application.Features.SavedPlace.Commands.Create;
+using OurCheck.Application.Features.SavedPlace.Commands.Delete;
+using OurCheck.Application.Features.SavedPlace.Commands.Update;
+using OurCheck.Application.Features.SavedPlace.Queries.Get;
+using OurCheck.Application.Features.SavedPlace.Queries.List;
 
 namespace OurCheck.API.Controllers;
 
@@ -32,9 +32,9 @@ public class SavedPlaceController(ISender mediatr) : ControllerBase
     [HttpPost]
     public async Task<IResult> CreateSavedPlace([FromBody] CreateSavedPlaceCommand command)
     {
-        var savedPlaceId = await mediatr.Send(command);
-        if (Guid.Empty == savedPlaceId) return Results.BadRequest();
-        return TypedResults.Created($"{Request.Path}/{savedPlaceId}", new { id = savedPlaceId });
+        var createdDto = await mediatr.Send(command);
+        if (Guid.Empty == createdDto.Id) return Results.BadRequest();
+        return TypedResults.Created($"{Request.Path}/{createdDto.Id}", createdDto);
     }
 
     [HttpDelete("{id}")]

@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
+using OurCheck.Client.Application;
 using OurCheck.Client.MAUI.Setup;
+using OurCheck.Client.Repository.API;
 
 namespace OurCheck.Client.MAUI;
 
@@ -15,10 +17,15 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup();
 
+        var httpClient = new HttpClient {BaseAddress = new Uri("http://localhost:5017/")};
+        builder.Services.AddSingleton(httpClient);
+
         builder.Services
             .RegisterConfiguration()
             .RegisterSerilog()
-            .RegisterPresentationModels();
+            .RegisterPresentationModels()
+            .AddRepositories()
+            .AddServices();
             // .AddCoreServices()
             // .RegisterPresentationModels()
             // .RegisterPresentationServices()
