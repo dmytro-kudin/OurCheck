@@ -10,10 +10,10 @@ public abstract class BaseContentPage<T> : ContentPage where T : BasePageViewMod
     {
         base.BindingContext = viewModel;
         
-        SafeAreaEdges = SafeAreaEdges.All;
+        SafeAreaEdges = SafeArea;
         
         On<iOS>().SetModalPresentationStyle(UIModalPresentationStyle.FormSheet);
-        Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific.Page.SetLargeTitleDisplay(this, LargeTitleDisplayMode.Always);
+        On<iOS>().SetLargeTitleDisplay(LargeTitleDisplayMode.Always);
         
         Shell.SetBackgroundColor(this, Colors.Transparent);
         Shell.SetNavBarHasShadow(this, false);
@@ -22,6 +22,8 @@ public abstract class BaseContentPage<T> : ContentPage where T : BasePageViewMod
     }
 
     protected new T BindingContext => (T)base.BindingContext;
+    
+    protected virtual SafeAreaEdges SafeArea => SafeAreaEdges.All;
 
     protected virtual void InitView()
     {

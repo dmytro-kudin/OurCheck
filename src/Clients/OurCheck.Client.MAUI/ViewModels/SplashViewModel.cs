@@ -9,7 +9,7 @@ public class SplashViewModel : BasePageViewModel
     {
         await base.PageAppearingAsync();
         
-        await Task.Delay(2000);
+        await Task.Delay(200);
         await Shell.Current.GoToAsync($"///{nameof(HomePage)}");
     }
 }

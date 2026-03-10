@@ -86,13 +86,12 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <PublishAOT>true</PublishAOT>
         <PublishTrimmed>true</PublishTrimmed>
         <TrimMode>link</TrimMode>
+        <UseInterpreter>true</UseInterpreter>
     </PropertyGroup>
     
     <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
-        <UseInterpreter>false</UseInterpreter>
         <MtouchLink>SdkOnly</MtouchLink>
     </PropertyGroup>
 
