@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
 using OurCheck.Client.Application;
+using OurCheck.Client.MAUI.Handlers;
 using OurCheck.Client.MAUI.Setup;
 using OurCheck.Client.Repository.API;
 
@@ -36,6 +37,8 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
+
+        HandlersCustomizations.Apply();
 
         return builder.Build();
     }
